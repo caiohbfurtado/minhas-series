@@ -12,7 +12,7 @@ function NewGenre() {
 
   const save = () => {
     axios.post('/api/genres', {name: genre}).then((res) =>{
-      history.push('/generos').catch(err => console.log(err));
+      history.push('/generos');
       });
   }
 
@@ -24,7 +24,7 @@ function NewGenre() {
           <label htmlFor="name">Gênero:</label>
           <input type="text" value={genre} onChange={onChange} className="form-control" id="name" />
         </div>
-        <button type="submit" onClick={save} className="btn btn-primary">Salvar</button>
+        <button type="button" onClick={save} className="btn btn-primary">Salvar</button>
       </form>
     </div>
   );
