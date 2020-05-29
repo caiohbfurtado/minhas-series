@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   Route,
-  Switch,
   BrowserRouter as Router
 } from 'react-router-dom';
 
@@ -15,17 +14,9 @@ function App() {
   return (
     <Router>
       <Header />
-      <Switch>
-        <Route path='/generos/novo' exact>
-          <NewGenre />
-        </Route>
-        <Route path='/generos' exact>
-          <Genres />
-        </Route>
-        <Route path='/'>
-          <Home />
-        </Route>
-      </Switch>
+      <Route path='/generos/novo' exact component={NewGenre} />
+      <Route path='/generos' exact component={Genres}/>
+      <Route path='/' exact component={Home}/>
     </Router>
   );
 }
