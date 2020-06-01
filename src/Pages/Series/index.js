@@ -2,29 +2,29 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 
-function Genres() {
+function Series() {
   const [data, setData] = useState([]);
   const history = useHistory();
 
-  const goToNewGenre = () => {
-    history.push('/generos/novo');
+  useEffect(() => {
+    axios
+      .get('/api/series')
+      .then(res => {
+        setData(res.data.data)
+      })
+  }, []);
+
+  const goToNewSerie = () => {
+    history.push('/series/novo');
   }
 
-  const deleteGenre = id => {
+  const deleteSerie = id => {
     axios
-    .delete(`api/genres/${id}`)
+    .delete(`api/series/${id}`)
     .then(res =>{
       setData(data.filter(item => item.id !== id));
     });
   }
-
-  useEffect(() => {
-    axios
-      .get('/api/genres')
-      .then(res => {
-        setData(res.data.data)
-      })
-  }, [])
 
   const renderRow = record => {
     return (
@@ -32,8 +32,8 @@ function Genres() {
         <th scope="row">{record.id}</th>
         <td>{record.name}</td>
         <td>
-          <button className="btn btn-danger" onClick={() => deleteGenre(record.id)}>Excluir</button>
-          <button className="btn btn-warning ml-3" onClick={() => history.push(`/generos/editar/${record.id}`)}>Editar</button>
+          <button className="btn btn-danger" onClick={() => deleteSerie(record.id)}>Excluir</button>
+          <button className="btn btn-warning ml-3" onClick={() => history.push(`/series/info/${record.id}`)}>Info</button>
         </td>
       </tr>
     )
@@ -42,19 +42,19 @@ function Genres() {
   if (data.length === 0) {
     return (
       <div className='container'>
-        <h1>Gêneros</h1>
+        <h1>Séries</h1>
         <div className="alert alert-warning" role="alert">
-          Não há nenhum gênero cadastrado!
+          Não há nenhuma série cadastrada!
         </div>
-        <button type="button" className="btn btn-primary" onClick={goToNewGenre}>Cadastrar primeiro gênero</button>
+        <button type="button" className="btn btn-primary" onClick={goToNewSerie}>Cadastrar primeira Série</button>
       </div>
     )
   }
 
   return (
     <div className='container'>
-      <h1>Gêneros</h1>
-      <button type="button" className="btn btn-primary mb-2" onClick={goToNewGenre} >Novo Gênero</button>
+      <h1>Séries</h1>
+      <button type="button" className="btn btn-primary mb-2" onClick={goToNewSerie} >Nova Série</button>
       <table className="table table-dark">
         <thead>
           <tr>
@@ -71,4 +71,4 @@ function Genres() {
   );
 }
 
-export default Genres;
+export default Series;

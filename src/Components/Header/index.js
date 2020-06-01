@@ -21,11 +21,14 @@ function Header() {
 
   return (
     <Navbar color="light" light expand='md'>
-      <NavbarBrand tag={Link} to='/'><img src={logo} alt="logo minhas séries" width="110" /></NavbarBrand>
+      <NavbarBrand className="ml-3" tag={Link} to='/'><img src={logo} alt="logo minhas séries" width="110" /></NavbarBrand>
       <NavbarToggler onClick={toggle} />
       <Collapse isOpen={open} navbar>
         <Nav className='ml-auto' navbar>
           <NavItem>
+            <NavLink tag={Link} to='/series'>Séries</NavLink>
+          </NavItem>
+          <NavItem className="mr-5">
             <NavLink tag={Link} to='/generos'>Gêneros</NavLink>
           </NavItem>
         </Nav>

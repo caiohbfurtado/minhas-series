@@ -1,24 +1,30 @@
-import React, { useState } from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-import { useHistory } from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
 
-function NewGenre() {
+function EditGenre({match}) {
   const [genre, setGenre] = useState('');
   const history = useHistory();
+
+  useEffect(() => {
+    axios.get(`/api/genres/${match.params.id}`).then(res => {
+      setGenre(res.data.name)
+    })
+  },[match.params.id])
 
   const onChange = evt => {
     setGenre(evt.target.value);
   }
 
   const save = () => {
-    axios.post('/api/genres', {name: genre}).then((res) =>{
+    axios.put(`/api/genres/${match.params.id}`, {name: genre}).then(res => {
       history.push('/generos');
-      });
+    })
   }
 
   return (
     <div className='container'>
-      <h1>Novo Gênero:</h1>
+      <h1>Editar Gênero:</h1>
       <form>
         <div className="form-group">
           <label htmlFor="name">Gênero:</label>
@@ -31,4 +37,4 @@ function NewGenre() {
   );
 }
 
-export default NewGenre;
+export default EditGenre;
